@@ -1,6 +1,6 @@
 # Fuller Projection
 
-Small console app to project latitude and longitude pairs to points on Fullers Dymaxion projection.
+Small library to project latitude and longitude pairs to points on Fullers Dymaxion projection.
 
 Something of a work in progress - the transformation may not be entirely accurate at this point.
 
