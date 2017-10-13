@@ -1,27 +1,20 @@
-﻿using FullerProjection.Coordinates;
-using FullerProjection.Geometry;
+﻿using FullerProjection.Geometry;
 using System;
+using FullerProjection.Coordinates.Extensions;
 
 namespace FullerProjection.Coordinates
 {
-    public class FullerTransform2d
+    public class FullerTransform2D
     {
-        public FullerTransform2d(Angle rotationAngle, Func<double, double> xTransform, Func<double, double> yTransform)
+        public FullerTransform2D(Angle rotationAngle, Func<double, double> xTransform, Func<double, double> yTransform)
         {
             RotationAngle = rotationAngle;
             XTransform = xTransform;
             YTransform = yTransform;
         }
-        Angle RotationAngle { get; }
-        Func<double, double> XTransform { get; }
-        Func<double, double> YTransform { get; }
 
-        public FullerPoint Apply(FullerPoint point)
-        {
-            var rotatedPoint = FullerPoint.Rotate(point, RotationAngle);
-            var newX = XTransform(rotatedPoint.X);
-            var newY = YTransform(rotatedPoint.Y);
-            return new FullerPoint(newX, newY);
-        }
+        public Angle RotationAngle { get; }
+        public Func<double, double> XTransform { get; }
+        public Func<double, double> YTransform { get; }
     }
 }

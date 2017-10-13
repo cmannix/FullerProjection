@@ -1,9 +1,8 @@
-﻿using FullerProjection.Geometry;
-using static System.Math;
+﻿using FullerProjection.Coordinates.Interfaces;
 
 namespace FullerProjection.Coordinates
 {
-    public class FullerPoint
+    public class FullerPoint : IFullerPoint
     {
         public FullerPoint(double x, double y)
         {
@@ -12,12 +11,5 @@ namespace FullerProjection.Coordinates
         }
         public double X { get;  }
         public double Y { get;  }
-
-        public static FullerPoint Rotate(FullerPoint point, Angle angle)
-        {
-            return new FullerPoint(
-                x: point.X * Cos(angle.Radians) - point.Y * Sin(angle.Radians),
-                y: point.X * Sin(angle.Radians) + point.Y * Cos(angle.Radians));
-        }
     }
 }

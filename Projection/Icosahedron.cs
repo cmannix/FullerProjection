@@ -3,12 +3,14 @@ using FullerProjection.Coordinates;
 using static System.Math;
 using static FullerProjection.Projection.IcosahedronConstants;
 using System.Linq;
+using FullerProjection.Coordinates.Extensions;
+using FullerProjection.Coordinates.Interfaces;
 
 namespace FullerProjection.Projection
 {
-    public class Icosahedron
+    public static class Icosahedron
     {        
-        public static Triangle GetTriangleContainingPoint(Cartesian point)
+        public static Triangle GetTriangleContainingPoint(ICartesianPoint point)
         {
             var triangleIndex = GetClosestTriangleIndexForPoint(point);
             var lcdIndex = GetLcdTriangleIndex(triangleIndex, point);
@@ -20,13 +22,13 @@ namespace FullerProjection.Projection
             };
         }
 
-        public static Cartesian GetCentreCoordinate(int index)
+        public static ICartesianPoint GetCentreCoordinate(int index)
         {
             if (!CentreCoordinates.ContainsKey(index)) throw new ArgumentException("Triangle index not recognised");
             return CentreCoordinates[index];
         }
 
-        public static Cartesian GetIcosahedronVertexPoint(int index)
+        public static ICartesianPoint GetIcosahedronVertexPoint(int index)
         {
             return new Cartesian(
                 x: IcosahedronVertices[Axis.X][index],
@@ -45,32 +47,32 @@ namespace FullerProjection.Projection
             return TriangleIndexToFaceVertexMap[triangleIndex];
         }
 
-        private static int GetLcdTriangleIndex(int triangleIndex, Cartesian point)
+        private static int GetLcdTriangleIndex(int triangleIndex, ICartesianPoint point)
         {
             var result = GetHdistsForIndexAtPoint(triangleIndex, point);
 
-            var h_dist1 = result.Item1;
-            var h_dist2 = result.Item2;
-            var h_dist3 = result.Item3;
+            var hDist1 = result.Item1;
+            var hDist2 = result.Item2;
+            var hDist3 = result.Item3;
 
             int h_lcd = 0;
-            if ((h_dist1 <= h_dist2) && (h_dist2 <= h_dist3)) { h_lcd = 1; }
-            if ((h_dist1 <= h_dist3) && (h_dist3 <= h_dist2)) { h_lcd = 6; }
-            if ((h_dist2 <= h_dist1) && (h_dist1 <= h_dist3)) { h_lcd = 2; }
-            if ((h_dist2 <= h_dist3) && (h_dist3 <= h_dist1)) { h_lcd = 3; }
-            if ((h_dist3 <= h_dist1) && (h_dist1 <= h_dist2)) { h_lcd = 5; }
-            if ((h_dist3 <= h_dist2) && (h_dist2 <= h_dist1)) { h_lcd = 4; }
+            if ((hDist1 <= hDist2) && (hDist2 <= hDist3)) { h_lcd = 1; }
+            if ((hDist1 <= hDist3) && (hDist3 <= hDist2)) { h_lcd = 6; }
+            if ((hDist2 <= hDist1) && (hDist1 <= hDist3)) { h_lcd = 2; }
+            if ((hDist2 <= hDist3) && (hDist3 <= hDist1)) { h_lcd = 3; }
+            if ((hDist3 <= hDist1) && (hDist1 <= hDist2)) { h_lcd = 5; }
+            if ((hDist3 <= hDist2) && (hDist2 <= hDist1)) { h_lcd = 4; }
 
             return h_lcd;
         }
 
-        private static int GetClosestTriangleIndexForPoint(Cartesian point)
+        private static int GetClosestTriangleIndexForPoint(ICartesianPoint point)
         {
             return TriangleIndices
                 .Select(i =>
                 {
                     var center = GetCentreCoordinate(i);
-                    var diff = center - point;
+                    var diff = center.Subtract(point);
                     return new { Index = i, Distance = Magnitude(diff.X, diff.Y, diff.Z) };
                 })
                 .OrderBy(x => x.Distance)
@@ -78,7 +80,7 @@ namespace FullerProjection.Projection
                 .First();
         }
 
-        private static Tuple<double, double, double> GetHdistsForIndexAtPoint(int index, Cartesian point)
+        private static Tuple<double, double, double> GetHdistsForIndexAtPoint(int index, ICartesianPoint point)
         {
             var triangleIndices = HDistMap[index];
             var h_dist1 = CalculateHdist(triangleIndices.I1, point);
@@ -93,7 +95,7 @@ namespace FullerProjection.Projection
             return Sqrt(Pow(x, 2) + Pow(y, 2) + Pow(z, 2));
         }
 
-        private static double CalculateHdist(int vertexIndex, Cartesian point)
+        private static double CalculateHdist(int vertexIndex, ICartesianPoint point)
         {
             var h11 = point.X - IcosahedronVertices[Axis.X][vertexIndex];
             var h12 = point.Y - IcosahedronVertices[Axis.Y][vertexIndex];
