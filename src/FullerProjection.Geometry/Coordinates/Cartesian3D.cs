@@ -1,0 +1,61 @@
+﻿using FullerProjection.Geometry;
+using FullerProjection.Common;
+using FullerProjection.Geometry.Angles;
+using System;
+using System.Diagnostics;
+using static System.Math;
+
+namespace FullerProjection.Geometry.Coordinates
+{
+    [DebuggerDisplay("X: {X}, Y: {Y}, Z: {Z}")]
+    public class Cartesian3D : ICoordinate, IEquatable<Cartesian3D>
+    {
+        public Cartesian3D(double x, double y, double z)
+        {
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+        }
+
+        public double X { get; }
+        public double Y { get; }
+        public double Z { get; }
+        public Double Magnitude() => Sqrt(Pow(X, 2) + Pow(Y, 2) + Pow(Z, 2));
+
+        public Cartesian3D RotateX(Angle angle) => new Cartesian3D(
+                        x: X,
+                        y: Y * Cos(angle.Radians.Value) - Z * Sin(angle.Radians.Value),
+                        z: Z * Cos(angle.Radians.Value) + Y * Sin(angle.Radians.Value));
+
+        public Cartesian3D RotateY(Angle angle) => new Cartesian3D(
+                        x: X * Cos(angle.Radians.Value) + Z * Sin(angle.Radians.Value),
+                        y: Y,
+                        z: Z * Cos(angle.Radians.Value) - X * Sin(angle.Radians.Value));
+
+        public Cartesian3D RotateZ(Angle angle) => new Cartesian3D(
+                        x: X * Cos(angle.Radians.Value) - Y * Sin(angle.Radians.Value),
+                        y: Y * Cos(angle.Radians.Value) + X * Sin(angle.Radians.Value),
+                        z: Z);
+
+        public static Cartesian3D operator +(Cartesian3D a, Cartesian3D b) => new Cartesian3D(x: a.X + b.X, y: a.Y + b.Y, z: a.Z + b.Z);
+        public static Cartesian3D operator -(Cartesian3D a, Cartesian3D b) => new Cartesian3D(x: a.X - b.X, y: a.Y - b.Y, z: a.Z - b.Z);
+        public static bool operator ==(Cartesian3D value1, Cartesian3D value2)
+        {
+            if (value1 is null || value2 is null)
+            {
+                return System.Object.Equals(value1, value2);
+            }
+
+            return value1.Equals(value2);
+        }
+        public static bool operator !=(Cartesian3D value1, Cartesian3D value2) => !(value1 == value2);
+
+        public bool Equals(Cartesian3D? other) => other is object && this.X.IsEqualTo(other.X) && this.Y.IsEqualTo(other.Y) && this.Z.IsEqualTo(other.Z);
+
+        public override bool Equals(System.Object? obj) => obj is Cartesian3D d && this.Equals(d);
+
+        public override int GetHashCode() => this.X.GetHashCode() + this.Y.GetHashCode() + this.Z.GetHashCode();
+
+        public override string ToString() => $"X: {X}, Y: {Y}, Z: {Z}";
+    }
+}
