@@ -16,9 +16,9 @@ namespace FullerProjection.Core
         public static Cartesian2D GetFullerPoint(Geodesic point)
         {
             Console.WriteLine($"Geodesic point: {point}");
-            var spherical = point.ToSpherical();
+            var spherical = Conversion.SphericalFrom(point);
             Console.WriteLine($"Spherical point: {spherical}");
-            var cartesian = point.ToCartesian();
+            var cartesian = Conversion.CartesianFrom(point);
             Console.WriteLine($"Cartesian point: {cartesian}");
 
             var triangle = GetTriangleContainingPoint(cartesian);
@@ -31,7 +31,7 @@ namespace FullerProjection.Core
             var vertexIndex = GetFaceVertexForTriangle(containingTriangle.Index);
             var vertexCoordinate = GetIcosahedronVertexPoint(vertexIndex);
 
-            var sp = GetCentreCoordinate(containingTriangle.Index).ToGeodesic();
+            var sp = Conversion.GeodesicFrom(GetCentreCoordinate(containingTriangle.Index));
 
             mapCoordinate = mapCoordinate.RotateZ(sp.Longitude);
             vertexCoordinate = vertexCoordinate.RotateZ(sp.Longitude);
@@ -39,11 +39,10 @@ namespace FullerProjection.Core
             mapCoordinate = mapCoordinate.RotateY(sp.Latitude);
             vertexCoordinate = vertexCoordinate.RotateY(sp.Latitude);
 
-            var sp2 = vertexCoordinate.ToGeodesic();
-            var adjustedLongitude = sp2.Longitude - (Angle.FromDegrees(new Degrees(90.0)));
-            sp2 = sp2.WithLongitude(adjustedLongitude);
+            var sp2 = Conversion.GeodesicFrom(vertexCoordinate);
+            var adjustedLongitude = sp2.Longitude - (Angle.FromDegrees(Degrees.Ninety));
 
-            mapCoordinate = mapCoordinate.RotateZ(sp2.Longitude);
+            mapCoordinate = mapCoordinate.RotateZ(adjustedLongitude);
 
             /* exact transformation equations */
 
@@ -84,49 +83,49 @@ namespace FullerProjection.Core
             switch (containingTriangle.Index)
             {
                 case 0:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(240)), i => i + 2, i => i + 7.0 / (2.0 * Sqrt(3.0)));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(240)), 2, 7.0 / (2.0 * Sqrt(3.0)));
                 case 1:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(300)), i => i + 2, i => i + 5.0 / (2.0 * Sqrt(3.0)));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(300)), 2, 5.0 / (2.0 * Sqrt(3.0)));
                 case 2:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), i => i + 2.5, i => i + 2.0 / Sqrt(3.0));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), 2.5, 2.0 / Sqrt(3.0));
                 case 3:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(60)), i => i + 3, i => i + 5.0 / (2.0 + Sqrt(3.0)));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(60)), 3, 5.0 / (2.0 + Sqrt(3.0)));
                 case 4:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(180)), i => i + 2.5, i => i + 4.0 * Sqrt(3.0) / 3.0);
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(180)), 2.5, 4.0 * Sqrt(3.0) / 3.0);
                 case 5:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(300)), i => i + 1.5, i => i + 4.0 * Sqrt(3.0) / 3.0);
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(300)), 1.5, 4.0 * Sqrt(3.0) / 3.0);
                 case 6:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(300)), i => i + 1.0, i => i + 5.0 * Sqrt(2.0) / 3.0);
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(300)), 1.0, 5.0 * Sqrt(2.0) / 3.0);
                 case 7:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), i => i + 1.5, i => i + 2.0 / Sqrt(3.0));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), 1.5, 2.0 / Sqrt(3.0));
                 case 8:
                     return (containingTriangle.LcdIndex > 2)
-                        ? new FullerTransform2D(Angle.FromDegrees(new Degrees(300)), i => i + 1.5, i => i + 1.0 / Sqrt(3.0))
-                        : new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), i => i + 2, i => i + 1.0 / Sqrt(3.0));
+                        ? new FullerTransform2D(Angle.FromDegrees(new Degrees(300)), 1.5, 1.0 / Sqrt(3.0))
+                        : new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), 2, 1.0 / Sqrt(3.0));
                 case 9:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(60)), i => i + 2.5, i => i + 1.0 / Sqrt(3.0));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(60)), 2.5, 1.0 / Sqrt(3.0));
                 case 10:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(60)), i => i + 3.5, i => i + 1.0 / Sqrt(3.0));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(60)), 3.5, 1.0 / Sqrt(3.0));
                 case 11:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(120)), i => i + 3.5, i => i + 2.0 / Sqrt(3.0));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(120)), 3.5, 2.0 / Sqrt(3.0));
                 case 12:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(60)), i => i + 4.0, i => i + 5.0 / (2.0 *Sqrt(3.0)));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(60)), 4.0, 5.0 / (2.0 *Sqrt(3.0)));
                 case 13:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), i => i + 4.0, i => i + 7.0 / (2.0 *Sqrt(3.0)));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), 4.0, 7.0 / (2.0 *Sqrt(3.0)));
                 case 14:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), i => i + 5.0, i => i + 7.0 / (2.0 *Sqrt(3.0)));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), 5.0, 7.0 / (2.0 *Sqrt(3.0)));
                 case 15:
                     return (containingTriangle.LcdIndex < 4)
-                    ? new FullerTransform2D(Angle.FromDegrees(new Degrees(60)), i => i + 0.5, i => i + 1.0 / Sqrt(3.0))
-                     : new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), i => i + 5.5, i => i + 2.0 / Sqrt(3.0));
+                    ? new FullerTransform2D(Angle.FromDegrees(new Degrees(60)), 0.5, 1.0 / Sqrt(3.0))
+                     : new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), 5.5, 2.0 / Sqrt(3.0));
                 case 16:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), i => i + 1.0, i => i + 1.0 / (2.0 * Sqrt(3.0)));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(0)), 1.0, 1.0 / (2.0 * Sqrt(3.0)));
                 case 17:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(120)), i => i + 4.0, i => i + 1.0 / (2.0 * Sqrt(3.0)));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(120)), 4.0, 1.0 / (2.0 * Sqrt(3.0)));
                 case 18:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(120)), i => i + 4.5, i => i + 5.0 / Sqrt(3.0));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(120)), 4.5, 5.0 / Sqrt(3.0));
                 case 19:
-                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(300)), i => i + 5.0, i => i + 5.0 / (2.0 * Sqrt(3.0)));
+                    return new FullerTransform2D(Angle.FromDegrees(new Degrees(300)), 5.0, 5.0 / (2.0 * Sqrt(3.0)));
                 default:
                     throw new ArgumentOutOfRangeException(nameof(containingTriangle), $"Index ({containingTriangle.Index}) of containing triangle was not recognized. Should be between 1 and 20.");
             }

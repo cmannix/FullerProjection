@@ -8,7 +8,7 @@ namespace FullerProjection.Geometry.Angles
         public static Degrees Zero = new Degrees(0);
         public static Degrees Ninety = new Degrees(90);
         public static Degrees OneEighty = new Degrees(180);
-        public static Degrees Zero = new Degrees(270);
+        public static Degrees TwoSeventy = new Degrees(270);
         public static Degrees ThreeSixty = new Degrees(360);
         public static Degrees MinusNinety = new Degrees(-90);
 

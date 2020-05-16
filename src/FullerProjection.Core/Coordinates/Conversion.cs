@@ -8,7 +8,7 @@ namespace FullerProjection.Geometry.Coordinates
 {
     public static class Conversion
     {
-        public static Cartesian3D CartestianFrom(Spherical point)
+        public static Cartesian3D CartesianFrom(Spherical point)
         {
             var x = Sin(point.Theta.Radians.Value) * Cos(point.Phi.Radians.Value);
             var y = Sin(point.Theta.Radians.Value) * Sin(point.Phi.Radians.Value);
@@ -61,7 +61,7 @@ namespace FullerProjection.Geometry.Coordinates
 
         public static Cartesian3D CartesianFrom(Geodesic point) 
         {
-            return SphericalFrom(point).ToCartesian();
+            return Conversion.CartesianFrom(SphericalFrom(point));
         }
     }
 

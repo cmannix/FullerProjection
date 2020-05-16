@@ -7,10 +7,7 @@ namespace FullerProjection.Geometry.Coordinates.Extensions
     {
         public static Cartesian2D ApplyTransform(this Cartesian2D point, FullerTransform2D transform)
         {
-            var rotatedPoint = point.Rotate(transform.RotationAngle);
-            var newX = transform.XTransform(rotatedPoint.X);
-            var newY = transform.YTransform(rotatedPoint.Y);
-            return new Cartesian2D(newX, newY);
+            return point.Rotate(transform.RotationAngle).TransformX(transform.XTransform).TransformY(transform.YTransform);
         }
     }
 }

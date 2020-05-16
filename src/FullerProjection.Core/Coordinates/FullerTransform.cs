@@ -6,15 +6,14 @@ namespace FullerProjection.Geometry.Coordinates
 {
     public class FullerTransform2D
     {
-        public FullerTransform2D(Angle rotationAngle, Func<double, double> xTransform, Func<double, double> yTransform)
+        public FullerTransform2D(Angle rotationAngle, double transformX, double transformY)
         {
             RotationAngle = rotationAngle;
-            XTransform = xTransform;
-            YTransform = yTransform;
+            XTransform = transformX;
+            YTransform = transformY;
         }
-
         public Angle RotationAngle { get; }
-        public Func<double, double> XTransform { get; }
-        public Func<double, double> YTransform { get; }
+        public double XTransform { get; }
+        public double YTransform { get; }
     }
 }
