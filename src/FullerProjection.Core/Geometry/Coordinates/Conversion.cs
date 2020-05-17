@@ -3,6 +3,7 @@ using FullerProjection.Core.Geometry.Coordinates;
 using FullerProjection.Core.Geometry.Angles;
 using FullerProjection.Core.Common;
 using static FullerProjection.Core.Geometry.Angles.AngleMath;
+using static System.Math;
 
 namespace FullerProjection.Core.Geometry.Coordinates
 {
@@ -12,9 +13,9 @@ namespace FullerProjection.Core.Geometry.Coordinates
         {
             public static Coordinates.Cartesian3D From(Coordinates.Spherical point)
             {
-                var x = Sin(point.Theta) * Cos(point.Phi);
-                var y = Sin(point.Theta) * Sin(point.Phi);
-                var z = Cos(point.Theta);
+                var x = point.R * Sin(point.Theta) * Cos(point.Phi);
+                var y = point.R * Sin(point.Theta) * Sin(point.Phi);
+                var z = point.R * Cos(point.Theta);
 
                 return new Coordinates.Cartesian3D(
                     x: x,
@@ -37,37 +38,24 @@ namespace FullerProjection.Core.Geometry.Coordinates
                     phi: phi,
                     theta: theta);
             }
+
+            public static Coordinates.Spherical From(Coordinates.Cartesian3D point)
+            {
+                var r = Sqrt(Pow(point.X, 2) + Pow(point.Y, 2) + Pow(point.Z, 2));
+                var phi = AngleMath.Atan2(point.Y, point.X);
+                var theta = AngleMath.Atan2(Sqrt(Pow(point.X, 2) + Pow(point.Y, 2)), point.Z);
+
+                return new Coordinates.Spherical(
+                    phi: phi,
+                    theta: theta,
+                    r: r);
+            }
         }
 
         public static class Geodesic
         {
-            public static Coordinates.Geodesic From(Coordinates.Cartesian3D point)
-            {
-                var x = point.X;
-                var y = point.Y;
-                var z = point.Z;
-
-                var latitude = Angle.From(Radians.FromRaw(System.Math.Acos(z)));
-                var longitude = Angle.From(Degrees.Zero);
-
-                if (x.IsEqualTo(0) && y.IsGreaterThan(0)) { longitude = Angle.From(Degrees.Ninety); }
-                if (x.IsEqualTo(0) && y.IsLessThan(0)) { longitude = Angle.From(Degrees.TwoSeventy); }
-                if (x.IsEqualTo(0) && y.IsEqualTo(0)) { longitude = Angle.From(Degrees.Zero); }
-                if (x.IsLessThan(0) && y.IsEqualTo(0)) { longitude = Angle.From(Degrees.OneEighty); }
-                if (x.IsNotEqualTo(0) && y.IsNotEqualTo(0))
-                {
-                    var a = Angle.From(Degrees.Zero);
-                    if (x.IsGreaterThan(0) && y.IsGreaterThan(0)) { a = Angle.From(Degrees.Zero); }
-                    if (x.IsLessThan(0) && y.IsGreaterThan(0)) { a = Angle.From(Degrees.OneEighty); }
-                    if (x.IsLessThan(0) && y.IsLessThan(0)) { a = Angle.From(Degrees.OneEighty); }
-                    if (x.IsGreaterThan(0) && y.IsLessThan(0)) { a = Angle.From(Degrees.ThreeSixty); }
-                    longitude = Angle.From(Radians.FromRaw(System.Math.Atan(y / x) + a.Radians.Value));
-                }
-
-                return new Coordinates.Geodesic(
-                    latitude: latitude,
-                    longitude: longitude);
-            }
+            public static Coordinates.Geodesic From(Coordinates.Cartesian3D point) => Geodesic.From(Spherical.From(point));
+            public static Coordinates.Geodesic From(Coordinates.Spherical point) => new Coordinates.Geodesic(latitude: Angle.From(Degrees.Ninety) - point.Theta, longitude: point.Phi);
         }
     }
 }

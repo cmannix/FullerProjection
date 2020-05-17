@@ -25,9 +25,9 @@ namespace FullerProjection.Core.Projection
             return CentreCoordinates[index];
         }
 
-        public static Cartesian3D GetIcosahedronVertexPoint(int index)
+        public static Cartesian3D GetIcosahedronVertexPoint(int vertexIndex)
         {
-            return IcosahedronVertices[index];
+            return IcosahedronVertices[vertexIndex];
         }
 
         public static int GetFaceVertexForTriangle(int triangleIndex)

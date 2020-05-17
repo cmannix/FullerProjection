@@ -40,6 +40,17 @@ namespace FullerProjection.Test
             Assert.Equal(expected, result, DoubleComparisonPrecision);
         }
 
+        [Fact]
+        public void Can_calculate_arctan_of_angle()
+        {
+            var value = 0.5773502691996256;
+            var expected = Angle.From(Degrees.FromRaw(30));
+
+            var result = Atan(value);
+
+            Assert.Equal(expected.Degrees.Value, result.Degrees.Value, 5);
+        }
+
         private const int DoubleComparisonPrecision = 10;
     }
 }

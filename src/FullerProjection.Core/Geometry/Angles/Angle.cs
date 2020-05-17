@@ -52,5 +52,7 @@ namespace FullerProjection.Core.Geometry.Angles
         public override bool Equals(System.Object? obj) => obj is Degrees d && this.Equals(d);
 
         public override int GetHashCode() => this.Degrees.GetHashCode();
+
+        public override string ToString() => $"{Degrees}, {Radians}";
     }
 }

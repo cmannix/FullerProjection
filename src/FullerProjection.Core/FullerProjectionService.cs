@@ -12,44 +12,35 @@ namespace FullerProjection.Core
     public class FullerProjectionService
     {
 
-        public static Cartesian2D GetFullerPoint(Geodesic point)
+        public static Cartesian2D GetFullerPoint(Geodesic point) => GetCoordinatesOnFullerProjection(point);
+
+        static Cartesian2D GetCoordinatesOnFullerProjection(Geodesic mapCoordinate)
         {
-            Console.WriteLine($"Geodesic point: {point}");
-            var spherical = Conversion.Spherical.From(point);
-            Console.WriteLine($"Spherical point: {spherical}");
-            var cartesian = Conversion.Cartesian3D.From(point);
-            Console.WriteLine($"Cartesian point: {cartesian}");
-
-            var triangle = GetTriangleContainingPoint(cartesian);
-
-            return GetCoordinatesOnFullerProjection(triangle, cartesian);
-        }
-
-        static Cartesian2D GetCoordinatesOnFullerProjection(Triangle containingTriangle, Cartesian3D mapCoordinate)
-        {
+            var coordinate = Conversion.Cartesian3D.From(mapCoordinate);
+            var containingTriangle = GetTriangleContainingPoint(coordinate);
             var vertexIndex = GetFaceVertexForTriangle(containingTriangle.Index);
-            var vertexCoordinate = GetIcosahedronVertexPoint(vertexIndex);
 
             var sp = Conversion.Geodesic.From(GetCentreCoordinate(containingTriangle.Index));
-
-            mapCoordinate = mapCoordinate.RotateZ(sp.Longitude);
-            vertexCoordinate = vertexCoordinate.RotateZ(sp.Longitude);
-
-            mapCoordinate = mapCoordinate.RotateY(sp.Latitude);
-            vertexCoordinate = vertexCoordinate.RotateY(sp.Latitude);
+            
+            var vertexCoordinate = GetIcosahedronVertexPoint(vertexIndex)
+                .RotateZ(sp.Longitude)
+                .RotateY(sp.Latitude);
 
             var sp2 = Conversion.Geodesic.From(vertexCoordinate);
             var adjustedLongitude = sp2.Longitude - (Angle.From(Degrees.Ninety));
 
-            mapCoordinate = mapCoordinate.RotateZ(adjustedLongitude);
+            coordinate = coordinate
+                .RotateZ(sp.Longitude)
+                .RotateY(sp.Latitude)
+                .RotateZ(adjustedLongitude);
 
             /* exact transformation equations */
 
-            var gz = Sqrt(1 - Pow(mapCoordinate.X, 2) - Pow(mapCoordinate.Y, 2));
+            var gz = Sqrt(1 - Pow(coordinate.X, 2) - Pow(coordinate.Y, 2));
             var gs = Sqrt(5 + 2 * Sqrt(5)) / (gz * Sqrt(15));
 
-            var gxp = mapCoordinate.X * gs;
-            var gyp = mapCoordinate.Y * gs;
+            var gxp = coordinate.X * gs;
+            var gyp = coordinate.Y * gs;
 
             var ga1p = 2.0 * gyp / Sqrt(3.0) + (GElevation / 3.0);
             var ga2p = gxp - (gyp / Sqrt(3)) + (GElevation / 3.0);
