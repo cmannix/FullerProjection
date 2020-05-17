@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullerProjection.Core", "sr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E75BC37C-20C6-4E7B-ACFE-233373A7EB35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.FullerProjection.Core", "test\Test.FullerProjection.Core\Test.FullerProjection.Core.csproj", "{A82DA366-EF27-4FE3-A573-EAAFF1EA5A2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullerProjection.Core.Tests", "test\FullerProjection.Core.Tests\FullerProjection.Core.Tests.csproj", "{A82DA366-EF27-4FE3-A573-EAAFF1EA5A2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

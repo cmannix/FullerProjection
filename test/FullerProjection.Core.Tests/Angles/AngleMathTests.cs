@@ -3,7 +3,7 @@ using Xunit;
 using FullerProjection.Core.Geometry.Angles;
 using static FullerProjection.Core.Geometry.Angles.AngleMath;
 
-namespace FullerProjection.Test
+namespace FullerProjection.UnitTests.Core
 {
     public class AngleMathTests
     {

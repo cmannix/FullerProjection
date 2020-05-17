@@ -2,9 +2,9 @@ using System;
 using Xunit;
 using FullerProjection.Core.Geometry.Angles;
 
-namespace FullerProjection.Test
+namespace FullerProjection.UnitTests.Core
 {
-    public class RadianTests
+    public class DegreeTests
     {
         [Theory]
         [InlineData(30, 30)]
@@ -14,7 +14,7 @@ namespace FullerProjection.Test
         [InlineData(-10, -10)]
         public void Can_create_from_number(double n, double expected)
         {
-            var degree = Radians.FromRaw(n);
+            var degree = Degrees.FromRaw(n);
 
             Assert.Equal(expected, degree.Value);
         }
@@ -26,10 +26,10 @@ namespace FullerProjection.Test
         [InlineData(350, 20, 370)]
         public void Can_add(double a, double b, double result)
         {
-            var degree1 = Radians.FromRaw(a);
-            var degree2 = Radians.FromRaw(b);
+            var degree1 = Degrees.FromRaw(a);
+            var degree2 = Degrees.FromRaw(b);
 
-            Assert.Equal(Radians.FromRaw(result), degree1 + degree2);
+            Assert.Equal(Degrees.FromRaw(result), degree1 + degree2);
         }
 
         [Theory]
@@ -39,10 +39,10 @@ namespace FullerProjection.Test
         [InlineData(10, 20, -10)]
         public void Can_subtract(double a, double b, double result)
         {
-            var degree1 = Radians.FromRaw(a);
-            var degree2 = Radians.FromRaw(b);
+            var degree1 = Degrees.FromRaw(a);
+            var degree2 = Degrees.FromRaw(b);
 
-            Assert.Equal(Radians.FromRaw(result), degree1 - degree2);
+            Assert.Equal(Degrees.FromRaw(result), degree1 - degree2);
         }
 
         [Theory]
@@ -51,8 +51,8 @@ namespace FullerProjection.Test
         [InlineData(1,1, true)]
         public void Can_compare_for_equality(double a, double b, bool expectedResult)
         {
-            var degree1 = Radians.FromRaw(a);
-            var degree2 = Radians.FromRaw(b);
+            var degree1 = Degrees.FromRaw(a);
+            var degree2 = Degrees.FromRaw(b);
 
             Assert.Equal(expectedResult, degree1 == degree2);
         }
