@@ -3,7 +3,7 @@ using FullerProjection.Core.Common;
 
 namespace FullerProjection.Core.Geometry.Angles
 {
-    public class Degrees : IAngleUnit, IEquatable<Degrees>
+    public class Degrees : IAngleUnit, IEquatable<Degrees>, IComparable<Degrees>
     {
         public static Degrees Zero = FromRaw(0);
         public static Degrees Ninety = FromRaw(90);
@@ -20,6 +20,10 @@ namespace FullerProjection.Core.Geometry.Angles
         public static Degrees FromRaw(double value) => new Degrees(value);
         public static Degrees operator +(Degrees a, Degrees b) => FromRaw(a.Value + b.Value);
         public static Degrees operator -(Degrees a, Degrees b) => FromRaw(a.Value - b.Value);
+        public static Degrees operator %(Degrees a, Degrees b) => FromRaw(a.Value % b.Value);
+        public int CompareTo(Degrees other) => this.Value.CompareTo(other.Value);
+        public static bool operator >(Degrees a, Degrees b) => a.CompareTo(b) > 0;
+        public static bool operator <(Degrees a, Degrees b) => a.CompareTo(b) < 0;
         public static bool operator ==(Degrees value1, Degrees value2)
         {
             if (value1 is null || value2 is null)

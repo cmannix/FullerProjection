@@ -8,7 +8,7 @@ using static FullerProjection.Core.Geometry.Angles.AngleMath;
 namespace FullerProjection.Core.Geometry.Angles
 {
     [DebuggerDisplay("Degrees: {Degrees}, Radians: {Radians}")]
-    public class Angle : IEquatable<Angle>
+    public class Angle : IEquatable<Angle>, IComparable<Angle>
     {
         private const double TransformFactor = PI / 180d;
         private Angle(Degrees d)
@@ -36,6 +36,10 @@ namespace FullerProjection.Core.Geometry.Angles
         };
         public static Angle operator +(Angle a1, Angle a2) => new Angle(a1.Degrees + a2.Degrees);
         public static Angle operator -(Angle a1, Angle a2) => new Angle(a1.Degrees - a2.Degrees);
+        public static Angle operator %(Angle a, Angle b) => new Angle(a.Degrees % b.Degrees);
+        public int CompareTo(Angle other) => this.Degrees.CompareTo(other.Degrees);
+        public static bool operator >(Angle a, Angle b) => a.CompareTo(b) > 0;
+        public static bool operator <(Angle a, Angle b) => a.CompareTo(b) < 0;
         public static bool operator ==(Angle value1, Angle value2)
         {
             if (value1 is null || value2 is null)

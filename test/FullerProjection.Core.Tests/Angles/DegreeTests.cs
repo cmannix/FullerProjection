@@ -56,5 +56,44 @@ namespace FullerProjection.UnitTests.Core
 
             Assert.Equal(expectedResult, degree1 == degree2);
         }
+
+        [Theory]
+        [InlineData(1,2, false)]
+        [InlineData(2,1, true)]
+        [InlineData(1,1, false)]
+        public void Can_compare_for_greater_than(double a, double b, bool expectedResult)
+        {
+            var degree1 = Degrees.FromRaw(a);
+            var degree2 = Degrees.FromRaw(b);
+
+            Assert.Equal(expectedResult, degree1 > degree2);
+        }
+
+        [Theory]
+        [InlineData(1,2, true)]
+        [InlineData(2,1, false)]
+        [InlineData(1,1, false)]
+        public void Can_compare_for_less_than(double a, double b, bool expectedResult)
+        {
+            var degree1 = Degrees.FromRaw(a);
+            var degree2 = Degrees.FromRaw(b);
+
+            Assert.Equal(expectedResult, degree1 < degree2);
+        }
+
+        [Theory]
+        [InlineData(180,180, 0)]
+        [InlineData(0,180, 0)]
+        [InlineData(10,180, 10)]
+        [InlineData(185,180, 5)]
+        [InlineData(-75,180, -75)]
+        [InlineData(-185,180, -5)]
+        public void Can_preform_modulo(double value, double mod, double expectedResult)
+        {
+            var degreeVal = Degrees.FromRaw(value);
+            var degreeMod = Degrees.FromRaw(mod);
+
+            Assert.Equal(Degrees.FromRaw(expectedResult), degreeVal % degreeMod);
+        }
     }
 }
