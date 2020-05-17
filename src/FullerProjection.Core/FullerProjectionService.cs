@@ -1,10 +1,10 @@
 using System;
 using FullerProjection.Geometry.Coordinates;
-using FullerProjection.Geometry.Coordinates.Extensions;
 using FullerProjection.Geometry.Angles;
 using FullerProjection.Core.Projection;
 using FullerProjection.Common;
 using static FullerProjection.Core.Projection.Icosahedron;
+using static System.Math;
 
 namespace FullerProjection.Core
 {
@@ -23,7 +23,7 @@ namespace FullerProjection.Core
             var triangle = GetTriangleContainingPoint(cartesian);
 
             return GetCoordinatesOnFullerProjection(triangle, cartesian);
-        } 
+        }
 
         static Cartesian2D GetCoordinatesOnFullerProjection(Triangle containingTriangle, Cartesian3D mapCoordinate)
         {
@@ -47,22 +47,22 @@ namespace FullerProjection.Core
 
             var gz = Sqrt(1 - Pow(mapCoordinate.X, 2) - Pow(mapCoordinate.Y, 2));
             var gs = Sqrt(5 + 2 * Sqrt(5)) / (gz * Sqrt(15));
-            
+
             var gxp = mapCoordinate.X * gs;
             var gyp = mapCoordinate.Y * gs;
-            
+
             var ga1p = 2.0 * gyp / Sqrt(3.0) + (GElevation / 3.0);
             var ga2p = gxp - (gyp / Sqrt(3)) + (GElevation / 3.0);
             var ga3p = (GElevation / 3.0) - gxp - (gyp / Sqrt(3));
-            
+
             var ga1 = Gt + Atan((ga1p - 0.5 * GElevation) / GDve);
             var ga2 = Gt + Atan((ga2p - 0.5 * GElevation) / GDve);
             var ga3 = Gt + Atan((ga3p - 0.5 * GElevation) / GDve);
-            
+
             var gx = 0.5 * (ga2 - ga3);
-            
+
             var gy = (1.0 / (2.0 * Sqrt(3))) * (2 * ga1 - ga2 - ga3);
-            
+
             /* Re-scale so plane triangle edge length is 1. */
 
             var x = gx / GArc;
@@ -72,71 +72,48 @@ namespace FullerProjection.Core
 
             var transform = GetFullerTransform(containingTriangle);
 
-            point = point.ApplyTransform(transform);
+            point = transform(point);
 
             return point;
         }
 
-        private static FullerTransform2D GetFullerTransform(Triangle containingTriangle)
+        private static Func<Cartesian2D, Cartesian2D> GetFullerTransform(Triangle containingTriangle)
         {
-            switch (containingTriangle.Index)
+            (Angle rotation, double xShift, double yShift) = containingTriangle.Index switch
             {
-                case 0:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(240)), 2, 7.0 / (2.0 * Sqrt(3.0)));
-                case 1:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(300)), 2, 5.0 / (2.0 * Sqrt(3.0)));
-                case 2:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(0)), 2.5, 2.0 / Sqrt(3.0));
-                case 3:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(60)), 3, 5.0 / (2.0 + Sqrt(3.0)));
-                case 4:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(180)), 2.5, 4.0 * Sqrt(3.0) / 3.0);
-                case 5:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(300)), 1.5, 4.0 * Sqrt(3.0) / 3.0);
-                case 6:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(300)), 1.0, 5.0 * Sqrt(2.0) / 3.0);
-                case 7:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(0)), 1.5, 2.0 / Sqrt(3.0));
-                case 8:
-                    return (containingTriangle.LcdIndex > 2)
-                        ? new FullerTransform2D(Angle.From(Degrees.FromRaw(300)), 1.5, 1.0 / Sqrt(3.0))
-                        : new FullerTransform2D(Angle.From(Degrees.FromRaw(0)), 2, 1.0 / Sqrt(3.0));
-                case 9:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(60)), 2.5, 1.0 / Sqrt(3.0));
-                case 10:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(60)), 3.5, 1.0 / Sqrt(3.0));
-                case 11:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(120)), 3.5, 2.0 / Sqrt(3.0));
-                case 12:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(60)), 4.0, 5.0 / (2.0 *Sqrt(3.0)));
-                case 13:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(0)), 4.0, 7.0 / (2.0 *Sqrt(3.0)));
-                case 14:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(0)), 5.0, 7.0 / (2.0 *Sqrt(3.0)));
-                case 15:
-                    return (containingTriangle.LcdIndex < 4)
-                    ? new FullerTransform2D(Angle.From(Degrees.FromRaw(60)), 0.5, 1.0 / Sqrt(3.0))
-                     : new FullerTransform2D(Angle.From(Degrees.FromRaw(0)), 5.5, 2.0 / Sqrt(3.0));
-                case 16:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(0)), 1.0, 1.0 / (2.0 * Sqrt(3.0)));
-                case 17:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(120)), 4.0, 1.0 / (2.0 * Sqrt(3.0)));
-                case 18:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(120)), 4.5, 5.0 / Sqrt(3.0));
-                case 19:
-                    return new FullerTransform2D(Angle.From(Degrees.FromRaw(300)), 5.0, 5.0 / (2.0 * Sqrt(3.0)));
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(containingTriangle), $"Index ({containingTriangle.Index}) of containing triangle was not recognized. Should be between 1 and 20.");
-            }
+                0 => (Angle.From(Degrees.FromRaw(240)), 2.0, 7.0 / (2.0 * Sqrt(3.0))),
+                1 => (Angle.From(Degrees.FromRaw(300)), 2, 5.0 / (2.0 * Sqrt(3.0))),
+                2 => (Angle.From(Degrees.FromRaw(0)), 2.5, 2.0 / Sqrt(3.0)),
+                3 => (Angle.From(Degrees.FromRaw(60)), 3, 5.0 / (2.0 + Sqrt(3.0))),
+                4 => (Angle.From(Degrees.FromRaw(180)), 2.5, 4.0 * Sqrt(3.0) / 3.0),
+                5 => (Angle.From(Degrees.FromRaw(300)), 1.5, 4.0 * Sqrt(3.0) / 3.0),
+                6 => (Angle.From(Degrees.FromRaw(300)), 1.0, 5.0 * Sqrt(2.0) / 3.0),
+                7 => (Angle.From(Degrees.FromRaw(0)), 1.5, 2.0 / Sqrt(3.0)),
+                8 when (containingTriangle.LcdIndex > 2) => (Angle.From(Degrees.FromRaw(300)), 1.5, 1.0 / Sqrt(3.0)),
+                8 => (Angle.From(Degrees.FromRaw(0)), 2, 1.0 / Sqrt(3.0)),
+                9 => (Angle.From(Degrees.FromRaw(60)), 2.5, 1.0 / Sqrt(3.0)),
+                10 => (Angle.From(Degrees.FromRaw(60)), 3.5, 1.0 / Sqrt(3.0)),
+                11 => (Angle.From(Degrees.FromRaw(120)), 3.5, 2.0 / Sqrt(3.0)),
+                12 => (Angle.From(Degrees.FromRaw(60)), 4.0, 5.0 / (2.0 * Sqrt(3.0))),
+                13 => (Angle.From(Degrees.FromRaw(0)), 4.0, 7.0 / (2.0 * Sqrt(3.0))),
+                14 => (Angle.From(Degrees.FromRaw(0)), 5.0, 7.0 / (2.0 * Sqrt(3.0))),
+                15 when (containingTriangle.LcdIndex < 4) => (Angle.From(Degrees.FromRaw(60)), 0.5, 1.0 / Sqrt(3.0)),
+                15 => (Angle.From(Degrees.FromRaw(0)), 5.5, 2.0 / Sqrt(3.0)),
+                16 => (Angle.From(Degrees.FromRaw(0)), 1.0, 1.0 / (2.0 * Sqrt(3.0))),
+                17 => (Angle.From(Degrees.FromRaw(120)), 4.0, 1.0 / (2.0 * Sqrt(3.0))),
+                18 => (Angle.From(Degrees.FromRaw(120)), 4.5, 5.0 / Sqrt(3.0)),
+                19 => (Angle.From(Degrees.FromRaw(300)), 5.0, 5.0 / (2.0 * Sqrt(3.0))),
+                _ => throw new ArgumentException(
+                    message: $"Index ({containingTriangle.Index}) of containing triangle was not recognized. Should be between 1 and 20.", 
+                    paramName: nameof(containingTriangle))
+            };
+
+            return p => p.Rotate(rotation).TransformX(xShift).TransformY(yShift);
         }
 
         private static readonly double GArc = 2.0 * Asin(Sqrt(5 - Sqrt(5)) / Sqrt(10));
         private static readonly double Gt = GArc / 2.0;
         private static readonly double GDve = Sqrt(3 + Sqrt(5)) / Sqrt(5 + Sqrt(5));
         private static readonly double GElevation = Sqrt(8) / Sqrt(5 + Sqrt(5));
-
-            
-
-        
     }
 }

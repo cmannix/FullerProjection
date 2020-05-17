@@ -2,7 +2,6 @@ using System;
 using FullerProjection.Geometry.Coordinates;
 using static FullerProjection.Core.Projection.IcosahedronConstants;
 using System.Linq;
-using FullerProjection.Geometry.Coordinates.Extensions;
 
 namespace FullerProjection.Core.Projection
 {

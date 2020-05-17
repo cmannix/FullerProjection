@@ -1,5 +1,4 @@
 ﻿using System;
-using FullerProjection.Geometry.Coordinates.Extensions;
 using FullerProjection.Geometry.Coordinates;
 using FullerProjection.Geometry.Angles;
 using FullerProjection.Common;
