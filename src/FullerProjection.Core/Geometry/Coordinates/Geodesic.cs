@@ -17,22 +17,24 @@ namespace FullerProjection.Core.Geometry.Coordinates
 
         private Angle EnsureLongitude(Angle candidateValue)
         {
-            var value = Angle.From(Degrees.FromRaw(candidateValue.Degrees.Value % 360));
-            if (value.Degrees.Value < 0) value += Angle.From(Degrees.ThreeSixty);
+            var value = candidateValue % LongitudeUpperBound;
+            if (value < LongitudeLowerBound) value += LongitudeUpperBound;
 
             return value;
         }
 
         private Angle EnsureLatitude(Angle candidateValue)
         {
-            if (candidateValue.Degrees.Value < LatitudeLowerBound.Degrees.Value || candidateValue.Degrees.Value > LatitudeUpperBound.Degrees.Value)
+            if (candidateValue < LatitudeLowerBound || candidateValue > LatitudeUpperBound)
             {
-                throw new ArgumentException("Longitude must be between -90 and 90 degrees");
+                throw new ArgumentException($"Longitude must be between {LatitudeLowerBound.Degrees} and {LatitudeUpperBound.Degrees}");
             }
             return candidateValue;
         }
         private static Angle LatitudeLowerBound = Angle.From(Degrees.MinusNinety);
         private static Angle LatitudeUpperBound = Angle.From(Degrees.Ninety);
+        private static Angle LongitudeLowerBound = Angle.From(Degrees.Zero);
+        private static Angle LongitudeUpperBound = Angle.From(Degrees.ThreeSixty);
 
         public static bool operator ==(Geodesic value1, Geodesic value2)
         {

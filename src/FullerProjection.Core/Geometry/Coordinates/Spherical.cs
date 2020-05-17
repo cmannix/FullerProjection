@@ -37,26 +37,29 @@ namespace FullerProjection.Core.Geometry.Coordinates
 
         private Angle EnsurePhi(Angle candidateValue)
         {
-            var value = Angle.From(Degrees.FromRaw(candidateValue.Degrees.Value % 360));
-            if (value.Degrees.Value.IsLessThan(0)) value += Angle.From(Degrees.ThreeSixty);
-
+            var value = candidateValue %  PhiUpperBound;
+            if (value < PhiLowerBound) value += PhiUpperBound;
             return value;
         }
 
         private Angle EnsureTheta(Angle candidateValue)
         {
-            var value = Angle.From(Degrees.FromRaw(candidateValue.Degrees.Value % 180));
-            if (value.Degrees.Value.IsLessThan(0)) value += Angle.From(Degrees.OneEighty);
-
+            var value = candidateValue % ThetaUpperBound;
+            if (value < ThetaLowerBound) value += ThetaUpperBound;
             return value;
         }
 
         private double EnsureR(double candidateValue)
         {
-            if (candidateValue < 0) throw new ArgumentException($"r must be positive");
+            if (candidateValue < RLowerBound) throw new ArgumentException($"r must be positive");
             return candidateValue;
         }
 
+        private static Angle PhiLowerBound = Angle.From(Degrees.Zero);
+        private static Angle PhiUpperBound = Angle.From(Degrees.ThreeSixty);
+        private static Angle ThetaLowerBound = Angle.From(Degrees.Zero);
+        private static Angle ThetaUpperBound = Angle.From(Degrees.OneEighty);
+        private static double RLowerBound = 0;
         public static bool operator ==(Spherical value1, Spherical value2)
         {
             if (value1 is null || value2 is null)

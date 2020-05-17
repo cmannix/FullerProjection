@@ -14,26 +14,11 @@ namespace FullerProjection.Core.Geometry.Angles
         private Angle(Degrees d)
         {
             this.Degrees = d;
-            this.Radians = Radians.FromRaw(d.Value * TransformFactor);
-        }
-
-        private Angle(Radians r)
-        {
-            this.Radians = r;
-            this.Degrees = Degrees.FromRaw(r.Value / TransformFactor);
         }
         public Degrees Degrees { get; }
-
-        public Radians Radians { get; }
-
-        public static Angle From(IAngleUnit angle) => angle switch
-        {
-            Radians r => new Angle(r),
-            Degrees d => new Angle(d),
-            _ => throw new ArgumentException(
-                    message: "nameof(angle) is not a recognized angle representation",
-                    paramName: nameof(angle))
-        };
+        public Radians Radians => Radians.FromRaw(this.Degrees.Value * TransformFactor);
+        public static Angle From(Degrees d) => new Angle(d);
+        public static Angle From(Radians r) => new Angle(Degrees.FromRaw(r.Value / TransformFactor));
         public static Angle operator +(Angle a1, Angle a2) => new Angle(a1.Degrees + a2.Degrees);
         public static Angle operator -(Angle a1, Angle a2) => new Angle(a1.Degrees - a2.Degrees);
         public static Angle operator %(Angle a, Angle b) => new Angle(a.Degrees % b.Degrees);
