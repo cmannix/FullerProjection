@@ -27,7 +27,7 @@ namespace FullerProjection.Geometry.Coordinates
             var y = point.Y;
             var z = point.Z;
 
-            var latitude = Angle.From(new Radians(System.Math.Acos(z)));
+            var latitude = Angle.From(Radians.FromRaw(System.Math.Acos(z)));
             var longitude = Angle.From(Degrees.Zero);
 
             if (x.IsEqualTo(0) && y.IsGreaterThan(0)) { longitude = Angle.From(Degrees.Ninety); }
@@ -41,7 +41,7 @@ namespace FullerProjection.Geometry.Coordinates
                 if (x.IsLessThan(0) && y.IsGreaterThan(0)) { a = Angle.From(Degrees.OneEighty); }
                 if (x.IsLessThan(0) && y.IsLessThan(0)) { a = Angle.From(Degrees.OneEighty); }
                 if (x.IsGreaterThan(0) && y.IsLessThan(0)) { a = Angle.From(Degrees.ThreeSixty); }
-                longitude = Angle.From(new Radians(System.Math.Atan(y / x) + a.Radians.Value));
+                longitude = Angle.From(Radians.FromRaw(System.Math.Atan(y / x) + a.Radians.Value));
             }
 
             return new Geodesic(

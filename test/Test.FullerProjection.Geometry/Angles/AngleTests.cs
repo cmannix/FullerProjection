@@ -19,7 +19,7 @@ namespace FullerProjection.Test
         [Fact]
         public void Can_create_from_radians()
         {
-            var radians = new Radians(Math.PI);
+            var radians = Radians.FromRaw(Math.PI);
 
             var angle = Angle.From(radians);
 
@@ -29,7 +29,7 @@ namespace FullerProjection.Test
         [Fact]
         public void Correctly_converts_degrees_from_radians()
         {
-            var radians = new Radians(Math.PI);
+            var radians = Radians.FromRaw(Math.PI);
 
             var angle = Angle.From(radians);
 
@@ -43,7 +43,7 @@ namespace FullerProjection.Test
 
             var angle = Angle.From(degrees);
 
-            Assert.Equal(new Radians(Math.PI), angle.Radians);
+            Assert.Equal(Radians.FromRaw(Math.PI), angle.Radians);
         }
 
     }

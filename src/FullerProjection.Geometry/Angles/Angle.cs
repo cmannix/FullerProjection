@@ -14,7 +14,7 @@ namespace FullerProjection.Geometry.Angles
         private Angle(Degrees d)
         {
             this.Degrees = d;
-            this.Radians = new Radians(d.Value * TransformFactor);
+            this.Radians = Radians.FromRaw(d.Value * TransformFactor);
         }
 
         private Angle(Radians r)

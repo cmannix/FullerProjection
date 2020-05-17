@@ -14,7 +14,7 @@ namespace FullerProjection.Test
         [InlineData(-10, -10)]
         public void Can_create_from_number(double n, double expected)
         {
-            var degree = new Radians(n);
+            var degree = Radians.FromRaw(n);
 
             Assert.Equal(expected, degree.Value);
         }
@@ -26,10 +26,10 @@ namespace FullerProjection.Test
         [InlineData(350, 20, 370)]
         public void Can_add(double a, double b, double result)
         {
-            var degree1 = new Radians(a);
-            var degree2 = new Radians(b);
+            var degree1 = Radians.FromRaw(a);
+            var degree2 = Radians.FromRaw(b);
 
-            Assert.Equal(new Radians(result), degree1 + degree2);
+            Assert.Equal(Radians.FromRaw(result), degree1 + degree2);
         }
 
         [Theory]
@@ -39,10 +39,10 @@ namespace FullerProjection.Test
         [InlineData(10, 20, -10)]
         public void Can_subtract(double a, double b, double result)
         {
-            var degree1 = new Radians(a);
-            var degree2 = new Radians(b);
+            var degree1 = Radians.FromRaw(a);
+            var degree2 = Radians.FromRaw(b);
 
-            Assert.Equal(new Radians(result), degree1 - degree2);
+            Assert.Equal(Radians.FromRaw(result), degree1 - degree2);
         }
 
         [Theory]
@@ -51,8 +51,8 @@ namespace FullerProjection.Test
         [InlineData(1,1, true)]
         public void Can_compare_for_equality(double a, double b, bool expectedResult)
         {
-            var degree1 = new Radians(a);
-            var degree2 = new Radians(b);
+            var degree1 = Radians.FromRaw(a);
+            var degree2 = Radians.FromRaw(b);
 
             Assert.Equal(expectedResult, degree1 == degree2);
         }
