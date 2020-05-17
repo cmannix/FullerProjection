@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using static System.Math;
 using static FullerProjection.Geometry.Angles.AngleMath;
 
 namespace FullerProjection.Geometry.Angles
@@ -30,7 +31,7 @@ namespace FullerProjection.Geometry.Angles
 
         public Radians Radians { get; }
 
-        private const double TransformFactor = Pi / 180d;
+        private const double TransformFactor = PI / 180d;
         private static Radians ToRadians(Degrees degrees)
         {
             return new Radians(TransformFactor * degrees.Value);
