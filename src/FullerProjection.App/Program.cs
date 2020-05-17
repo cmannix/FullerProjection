@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using FullerProjection;
-using FullerProjection.Coordinates;
-using FullerProjection.Geometry;
+using FullerProjection.Core;
+using FullerProjection.Geometry.Coordinates;
+using FullerProjection.Geometry.Angles;
 
 namespace ProjectionApp
 {
@@ -39,10 +39,10 @@ namespace ProjectionApp
             // Console.WriteLine("Latitude: ");
             // var latitude = double.Parse(Console.ReadLine());
             // Console.WriteLine($"Longitude = {longitude}, Latitude = {latitude}");
-            var longitude = 10;
-            var latitude = 10;
+            var longitude = Angle.From(Degrees.FromRaw(10));
+            var latitude = Angle.From(Degrees.FromRaw(10));
 
-            var point = new Geodesic(Angle.From(latitude), Angle.From(longitude));
+            var point = new Geodesic(latitude, longitude);
             var fullerPoint = FullerProjectionService.GetFullerPoint(point);
             Console.WriteLine($"X = {fullerPoint.X}, Y = {fullerPoint.Y}");
         }
@@ -63,7 +63,7 @@ namespace ProjectionApp
         {
             var elements = line.Split(',');
 
-            return new Geodesic(Angle.From(double.Parse(elements[1])), Angle.From(double.Parse(elements[0])));
+            return new Geodesic(Angle.From(Degrees.FromRaw(double.Parse(elements[1]))), Angle.From(Degrees.FromRaw(double.Parse(elements[0]))));
         }
 
         private const string InputPath = @"";
