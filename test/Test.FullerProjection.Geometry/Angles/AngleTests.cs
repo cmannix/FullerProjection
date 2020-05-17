@@ -9,7 +9,7 @@ namespace FullerProjection.Test
         [Fact]
         public void Can_create_from_degrees()
         {
-            var degree = new Degrees(180);
+            var degree = Degrees.FromRaw(180);
 
             var angle = Angle.From(degree);
 
@@ -33,13 +33,13 @@ namespace FullerProjection.Test
 
             var angle = Angle.From(radians);
 
-            Assert.Equal(new Degrees(180), angle.Degrees);
+            Assert.Equal(Degrees.FromRaw(180), angle.Degrees);
         }
         
         [Fact]
         public void Correctly_converts_radians_from_degrees()
         {
-            var degrees = new Degrees(180);
+            var degrees = Degrees.FromRaw(180);
 
             var angle = Angle.From(degrees);
 

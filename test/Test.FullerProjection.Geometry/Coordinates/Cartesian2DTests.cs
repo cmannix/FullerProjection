@@ -55,9 +55,9 @@ namespace FullerProjection.Test
         public void Can_rotate_about_origin(double initialX, double initialY, double rotationAngleDegrees, double expectedX, double expectedY)
         {
             var point = new Cartesian2D(initialX, initialY);
-            var rotationAngle = Angle.From(new Degrees(rotationAngleDegrees));
+            var rotationAngle = Angle.From(Degrees.FromRaw(rotationAngleDegrees));
 
-            var result = point.Rotate(Angle.From(new Degrees(rotationAngleDegrees)));
+            var result = point.Rotate(Angle.From(Degrees.FromRaw(rotationAngleDegrees)));
 
             Assert.Equal(new Cartesian2D(expectedX, expectedY), result);
         }

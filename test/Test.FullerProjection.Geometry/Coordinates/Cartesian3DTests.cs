@@ -61,7 +61,7 @@ namespace FullerProjection.Test
         {
             var point = new Cartesian3D(initialX, initialY, initialZ);
 
-            var result = point.RotateX(Angle.From(new Degrees(rotationAngleDegrees)));
+            var result = point.RotateX(Angle.From(Degrees.FromRaw(rotationAngleDegrees)));
 
             Assert.Equal(new Cartesian3D(expectedX, expectedY, expectedZ), result);
         }
@@ -75,7 +75,7 @@ namespace FullerProjection.Test
         {
             var point = new Cartesian3D(initialX, initialY, initialZ);
 
-            var result = point.RotateY(Angle.From(new Degrees(rotationAngleDegrees)));
+            var result = point.RotateY(Angle.From(Degrees.FromRaw(rotationAngleDegrees)));
 
             Assert.Equal(new Cartesian3D(expectedX, expectedY, expectedZ), result);
         }
@@ -89,7 +89,7 @@ namespace FullerProjection.Test
         {
             var point = new Cartesian3D(initialX, initialY, initialZ);
 
-            var result = point.RotateZ(Angle.From(new Degrees(rotationAngleDegrees)));
+            var result = point.RotateZ(Angle.From(Degrees.FromRaw(rotationAngleDegrees)));
 
             Assert.Equal(new Cartesian3D(expectedX, expectedY, expectedZ), result);
         }

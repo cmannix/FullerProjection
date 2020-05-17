@@ -5,21 +5,21 @@ namespace FullerProjection.Geometry.Angles
 {
     public class Degrees : IAngleUnit, IEquatable<Degrees>
     {
-        public static Degrees Zero = new Degrees(0);
-        public static Degrees Ninety = new Degrees(90);
-        public static Degrees OneEighty = new Degrees(180);
-        public static Degrees TwoSeventy = new Degrees(270);
-        public static Degrees ThreeSixty = new Degrees(360);
-        public static Degrees MinusNinety = new Degrees(-90);
+        public static Degrees Zero = FromRaw(0);
+        public static Degrees Ninety = FromRaw(90);
+        public static Degrees OneEighty = FromRaw(180);
+        public static Degrees TwoSeventy = FromRaw(270);
+        public static Degrees ThreeSixty = FromRaw(360);
+        public static Degrees MinusNinety = FromRaw(-90);
 
         public double Value { get; }
-        public Degrees(double value)
+        private Degrees(double value)
         {
             Value = value;
         }
-
-        public static Degrees operator +(Degrees a, Degrees b) => new Degrees(a.Value + b.Value);
-        public static Degrees operator -(Degrees a, Degrees b) => new Degrees(a.Value - b.Value);
+        public static Degrees FromRaw(double value) => new Degrees(value);
+        public static Degrees operator +(Degrees a, Degrees b) => FromRaw(a.Value + b.Value);
+        public static Degrees operator -(Degrees a, Degrees b) => FromRaw(a.Value - b.Value);
         public static bool operator ==(Degrees value1, Degrees value2)
         {
             if (value1 is null || value2 is null)

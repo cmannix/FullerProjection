@@ -17,7 +17,7 @@ namespace FullerProjection.Geometry.Coordinates
 
         private Angle EnsureLongitude(Angle candidateValue)
         {
-            var value = Angle.From(new Degrees(candidateValue.Degrees.Value % 360));
+            var value = Angle.From(Degrees.FromRaw(candidateValue.Degrees.Value % 360));
             if (value.Degrees.Value < 0) value += Angle.From(Degrees.ThreeSixty);
 
             return value;
