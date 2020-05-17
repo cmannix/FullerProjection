@@ -15,9 +15,9 @@ namespace FullerProjection.Core
         public static Cartesian2D GetFullerPoint(Geodesic point)
         {
             Console.WriteLine($"Geodesic point: {point}");
-            var spherical = Conversion.SphericalFrom(point);
+            var spherical = Conversion.Spherical.From(point);
             Console.WriteLine($"Spherical point: {spherical}");
-            var cartesian = Conversion.CartesianFrom(point);
+            var cartesian = Conversion.Cartesian3D.From(point);
             Console.WriteLine($"Cartesian point: {cartesian}");
 
             var triangle = GetTriangleContainingPoint(cartesian);
@@ -30,7 +30,7 @@ namespace FullerProjection.Core
             var vertexIndex = GetFaceVertexForTriangle(containingTriangle.Index);
             var vertexCoordinate = GetIcosahedronVertexPoint(vertexIndex);
 
-            var sp = Conversion.GeodesicFrom(GetCentreCoordinate(containingTriangle.Index));
+            var sp = Conversion.Geodesic.From(GetCentreCoordinate(containingTriangle.Index));
 
             mapCoordinate = mapCoordinate.RotateZ(sp.Longitude);
             vertexCoordinate = vertexCoordinate.RotateZ(sp.Longitude);
@@ -38,7 +38,7 @@ namespace FullerProjection.Core
             mapCoordinate = mapCoordinate.RotateY(sp.Latitude);
             vertexCoordinate = vertexCoordinate.RotateY(sp.Latitude);
 
-            var sp2 = Conversion.GeodesicFrom(vertexCoordinate);
+            var sp2 = Conversion.Geodesic.From(vertexCoordinate);
             var adjustedLongitude = sp2.Longitude - (Angle.From(Degrees.Ninety));
 
             mapCoordinate = mapCoordinate.RotateZ(adjustedLongitude);
