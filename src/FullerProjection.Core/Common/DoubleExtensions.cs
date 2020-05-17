@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FullerProjection.Common
+namespace FullerProjection.Core.Common
 {
     public static class DoubleExtensions
     {

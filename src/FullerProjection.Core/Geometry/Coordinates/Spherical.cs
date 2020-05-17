@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using FullerProjection.Geometry.Angles;
+using FullerProjection.Core.Geometry.Angles;
 
-namespace FullerProjection.Geometry.Coordinates
+namespace FullerProjection.Core.Geometry.Coordinates
 {
     [DebuggerDisplay("Phi: {Phi}, Theta: {Theta}, R: {R}")]
     public class Spherical : ICoordinate

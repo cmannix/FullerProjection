@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using static FullerProjection.Geometry.Angles.AngleMath;
-using FullerProjection.Common;
-using FullerProjection.Geometry.Angles;
+using static FullerProjection.Core.Geometry.Angles.AngleMath;
+using FullerProjection.Core.Common;
+using FullerProjection.Core.Geometry.Angles;
 
-namespace FullerProjection.Geometry.Coordinates
+namespace FullerProjection.Core.Geometry.Coordinates
 {
     [DebuggerDisplay("X: {X}, Y: {Y}")]
     public class Cartesian2D : ICoordinate, IEquatable<Cartesian2D>

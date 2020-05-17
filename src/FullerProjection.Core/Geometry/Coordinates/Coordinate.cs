@@ -1,6 +1,6 @@
 using System;
 
-namespace FullerProjection.Geometry.Coordinates
+namespace FullerProjection.Core.Geometry.Coordinates
 {
     public interface ICoordinate
     {

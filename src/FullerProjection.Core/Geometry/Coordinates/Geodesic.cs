@@ -1,7 +1,7 @@
-﻿using FullerProjection.Geometry.Angles;
+﻿using FullerProjection.Core.Geometry.Angles;
 using System;
 
-namespace FullerProjection.Geometry.Coordinates
+namespace FullerProjection.Core.Geometry.Coordinates
 {
     public class Geodesic : ICoordinate
     {

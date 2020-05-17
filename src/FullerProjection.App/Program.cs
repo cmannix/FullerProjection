@@ -2,8 +2,8 @@
 using System.IO;
 using System.Linq;
 using FullerProjection.Core;
-using FullerProjection.Geometry.Coordinates;
-using FullerProjection.Geometry.Angles;
+using FullerProjection.Core.Geometry.Coordinates;
+using FullerProjection.Core.Geometry.Angles;
 
 namespace ProjectionApp
 {

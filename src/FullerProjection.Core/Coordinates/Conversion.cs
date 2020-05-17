@@ -1,10 +1,10 @@
 ﻿using System;
-using FullerProjection.Geometry.Coordinates;
-using FullerProjection.Geometry.Angles;
-using FullerProjection.Common;
-using static FullerProjection.Geometry.Angles.AngleMath;
+using FullerProjection.Core.Geometry.Coordinates;
+using FullerProjection.Core.Geometry.Angles;
+using FullerProjection.Core.Common;
+using static FullerProjection.Core.Geometry.Angles.AngleMath;
 
-namespace FullerProjection.Geometry.Coordinates
+namespace FullerProjection.Core.Geometry.Coordinates
 {
     public static class Conversion
     {

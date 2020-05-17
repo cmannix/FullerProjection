@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using FullerProjection.Geometry.Angles;
+using FullerProjection.Core.Geometry.Angles;
 
 namespace FullerProjection.Test
 {

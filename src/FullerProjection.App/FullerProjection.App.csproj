@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\FullerProjection.Geometry\FullerProjection.Geometry.csproj" />
     <ProjectReference Include="..\FullerProjection.Core\FullerProjection.Core.csproj" />
   </ItemGroup>
 

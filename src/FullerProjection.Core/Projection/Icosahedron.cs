@@ -1,5 +1,5 @@
 using System;
-using FullerProjection.Geometry.Coordinates;
+using FullerProjection.Core.Geometry.Coordinates;
 using static FullerProjection.Core.Projection.IcosahedronConstants;
 using System.Linq;
 

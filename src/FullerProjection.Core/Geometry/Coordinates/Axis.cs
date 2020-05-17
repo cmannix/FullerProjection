@@ -1,4 +1,4 @@
-namespace FullerProjection.Geometry.Coordinates
+namespace FullerProjection.Core.Geometry.Coordinates
 {
     public enum CartesianAxis
     {

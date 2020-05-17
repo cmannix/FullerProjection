@@ -1,7 +1,7 @@
 using System;
 using Xunit;
-using FullerProjection.Geometry.Coordinates;
-using FullerProjection.Geometry.Angles;
+using FullerProjection.Core.Geometry.Coordinates;
+using FullerProjection.Core.Geometry.Angles;
 
 namespace FullerProjection.Test
 {

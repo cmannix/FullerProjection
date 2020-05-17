@@ -1,8 +1,8 @@
 using System;
 using static System.Math;
-using FullerProjection.Common;
+using FullerProjection.Core.Common;
 
-namespace FullerProjection.Geometry.Angles
+namespace FullerProjection.Core.Geometry.Angles
 {
     public class Radians : IAngleUnit, IEquatable<Radians>
     {

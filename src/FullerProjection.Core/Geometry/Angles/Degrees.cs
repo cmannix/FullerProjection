@@ -1,7 +1,7 @@
 using System;
-using FullerProjection.Common;
+using FullerProjection.Core.Common;
 
-namespace FullerProjection.Geometry.Angles
+namespace FullerProjection.Core.Geometry.Angles
 {
     public class Degrees : IAngleUnit, IEquatable<Degrees>
     {

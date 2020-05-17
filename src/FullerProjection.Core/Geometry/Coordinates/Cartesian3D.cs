@@ -1,12 +1,11 @@
-﻿using FullerProjection.Geometry;
-using FullerProjection.Common;
-using FullerProjection.Geometry.Angles;
+﻿using FullerProjection.Core.Common;
+using FullerProjection.Core.Geometry.Angles;
 using System;
 using System.Diagnostics;
 using static System.Math;
-using static FullerProjection.Geometry.Angles.AngleMath;
+using static FullerProjection.Core.Geometry.Angles.AngleMath;
 
-namespace FullerProjection.Geometry.Coordinates
+namespace FullerProjection.Core.Geometry.Coordinates
 {
     [DebuggerDisplay("X: {X}, Y: {Y}, Z: {Z}")]
     public class Cartesian3D : ICoordinate, IEquatable<Cartesian3D>

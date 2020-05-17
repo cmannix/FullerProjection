@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FullerProjection.Geometry.Angles
+namespace FullerProjection.Core.Geometry.Angles
 {
     public interface IAngleUnit 
     {

@@ -1,4 +1,4 @@
-﻿using FullerProjection.Geometry.Coordinates;
+﻿using FullerProjection.Core.Geometry.Coordinates;
 using System;
 using System.Collections.Generic;
 using System.Linq;

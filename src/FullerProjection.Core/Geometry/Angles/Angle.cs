@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using static System.Math;
-using static FullerProjection.Geometry.Angles.AngleMath;
+using static FullerProjection.Core.Geometry.Angles.AngleMath;
 
-namespace FullerProjection.Geometry.Angles
+namespace FullerProjection.Core.Geometry.Angles
 {
     [DebuggerDisplay("Degrees: {Degrees}, Radians: {Radians}")]
     public class Angle : IEquatable<Angle>

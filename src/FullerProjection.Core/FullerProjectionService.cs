@@ -1,8 +1,8 @@
 using System;
-using FullerProjection.Geometry.Coordinates;
-using FullerProjection.Geometry.Angles;
+using FullerProjection.Core.Geometry.Coordinates;
+using FullerProjection.Core.Geometry.Angles;
 using FullerProjection.Core.Projection;
-using FullerProjection.Common;
+using FullerProjection.Core.Common;
 using static FullerProjection.Core.Projection.Icosahedron;
 using static System.Math;
 

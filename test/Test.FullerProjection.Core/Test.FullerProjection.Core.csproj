@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FullerProjection.Geometry\FullerProjection.Geometry.csproj" />
+    <ProjectReference Include="..\..\src\FullerProjection.Core\FullerProjection.Core.csproj" />
   </ItemGroup>
 
 </Project>
