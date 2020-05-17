@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using static System.Math;
+using static FullerProjection.Geometry.Angles.AngleMath;
 using FullerProjection.Common;
 using FullerProjection.Geometry.Angles;
 
@@ -18,8 +18,8 @@ namespace FullerProjection.Geometry.Coordinates
         public double Y { get; }
 
         public Cartesian2D Rotate(Angle angle) => new Cartesian2D(
-                x: X * Cos(angle.Radians.Value) - Y * Sin(angle.Radians.Value),
-                y: X * Sin(angle.Radians.Value) + Y * Cos(angle.Radians.Value));
+                x: X * Cos(angle) - Y * Sin(angle),
+                y: X * Sin(angle) + Y * Cos(angle));
 
         public Cartesian2D TransformX(double value) => new Cartesian2D(
             x: X + value,

@@ -1,4 +1,5 @@
 using System;
+using static System.Math;
 using FullerProjection.Common;
 
 namespace FullerProjection.Geometry.Angles 

@@ -4,6 +4,7 @@ using FullerProjection.Geometry.Angles;
 using System;
 using System.Diagnostics;
 using static System.Math;
+using static FullerProjection.Geometry.Angles.AngleMath;
 
 namespace FullerProjection.Geometry.Coordinates
 {
@@ -24,17 +25,17 @@ namespace FullerProjection.Geometry.Coordinates
 
         public Cartesian3D RotateX(Angle angle) => new Cartesian3D(
                         x: X,
-                        y: Y * Cos(angle.Radians.Value) - Z * Sin(angle.Radians.Value),
-                        z: Z * Cos(angle.Radians.Value) + Y * Sin(angle.Radians.Value));
+                        y: Y * Cos(angle) - Z * Sin(angle),
+                        z: Z * Cos(angle) + Y * Sin(angle));
 
         public Cartesian3D RotateY(Angle angle) => new Cartesian3D(
-                        x: X * Cos(angle.Radians.Value) + Z * Sin(angle.Radians.Value),
+                        x: X * Cos(angle) + Z * Sin(angle),
                         y: Y,
-                        z: Z * Cos(angle.Radians.Value) - X * Sin(angle.Radians.Value));
+                        z: Z * Cos(angle) - X * Sin(angle));
 
         public Cartesian3D RotateZ(Angle angle) => new Cartesian3D(
-                        x: X * Cos(angle.Radians.Value) - Y * Sin(angle.Radians.Value),
-                        y: Y * Cos(angle.Radians.Value) + X * Sin(angle.Radians.Value),
+                        x: X * Cos(angle) - Y * Sin(angle),
+                        y: Y * Cos(angle) + X * Sin(angle),
                         z: Z);
 
         public static Cartesian3D operator +(Cartesian3D a, Cartesian3D b) => new Cartesian3D(x: a.X + b.X, y: a.Y + b.Y, z: a.Z + b.Z);

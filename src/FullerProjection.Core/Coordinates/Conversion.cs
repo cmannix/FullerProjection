@@ -3,16 +3,17 @@ using FullerProjection.Geometry.Coordinates.Extensions;
 using FullerProjection.Geometry.Coordinates;
 using FullerProjection.Geometry.Angles;
 using FullerProjection.Common;
-using static System.Math;
+using static FullerProjection.Geometry.Angles.AngleMath;
+
 namespace FullerProjection.Geometry.Coordinates
 {
     public static class Conversion
     {
         public static Cartesian3D CartesianFrom(Spherical point)
         {
-            var x = Sin(point.Theta.Radians.Value) * Cos(point.Phi.Radians.Value);
-            var y = Sin(point.Theta.Radians.Value) * Sin(point.Phi.Radians.Value);
-            var z = Cos(point.Theta.Radians.Value);
+            var x = Sin(point.Theta) * Cos(point.Phi);
+            var y = Sin(point.Theta) * Sin(point.Phi);
+            var z = Cos(point.Theta);
 
             return new Cartesian3D(
                 x: x, 
@@ -26,7 +27,7 @@ namespace FullerProjection.Geometry.Coordinates
             var y = point.Y;
             var z = point.Z;
 
-            var latitude = Angle.FromRadians(new Radians(Acos(z)));
+            var latitude = Angle.FromRadians(new Radians(System.Math.Acos(z)));
             var longitude = Angle.FromDegrees(Degrees.Zero);
 
             if (x.IsEqualTo(0) && y.IsGreaterThan(0)) { longitude = Angle.FromDegrees(Degrees.Ninety); }
@@ -40,7 +41,7 @@ namespace FullerProjection.Geometry.Coordinates
                 if (x.IsLessThan(0) && y.IsGreaterThan(0)) { a = Angle.FromDegrees(Degrees.OneEighty); }
                 if (x.IsLessThan(0) && y.IsLessThan(0)) { a = Angle.FromDegrees(Degrees.OneEighty); }
                 if (x.IsGreaterThan(0) && y.IsLessThan(0)) { a = Angle.FromDegrees(Degrees.ThreeSixty); }
-                longitude = Angle.FromRadians(new Radians(Atan(y / x) + a.Radians.Value));
+                longitude = Angle.FromRadians(new Radians(System.Math.Atan(y / x) + a.Radians.Value));
             }
 
             return new Geodesic(
