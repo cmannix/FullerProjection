@@ -14,8 +14,8 @@ namespace FullerProjection.Test
         [InlineData(0, 0, 1)]
         public void Can_create(double rawPhi, double rawTheta, double r)
         {
-            var phi = Angle.FromDegrees(new Degrees(rawPhi));
-            var theta = Angle.FromDegrees(new Degrees(rawTheta));
+            var phi = Angle.From(new Degrees(rawPhi));
+            var theta = Angle.From(new Degrees(rawTheta));
             var point = new Spherical(phi, theta, r);
 
             Assert.Equal(phi, point.Phi);
@@ -30,8 +30,8 @@ namespace FullerProjection.Test
         [InlineData(-725.23, 354.77)]
         public void Phi_outside_of_0_to_360_range_wraps(double rawPhi, double expected)
         {
-            var phi = Angle.FromDegrees(new Degrees(rawPhi));
-            var theta = Angle.FromDegrees(Degrees.Ninety);
+            var phi = Angle.From(new Degrees(rawPhi));
+            var theta = Angle.From(Degrees.Ninety);
             var point = new Spherical(phi, theta);
 
             Assert.Equal(new Degrees(expected), point.Phi.Degrees);
@@ -44,8 +44,8 @@ namespace FullerProjection.Test
         [InlineData(-365.23, 174.77)]
         public void Theta_outside_of_0_to_180_range_wraps(double rawTheta, double expected)
         {
-            var phi = Angle.FromDegrees(Degrees.Ninety);
-            var theta = Angle.FromDegrees(new Degrees(rawTheta));
+            var phi = Angle.From(Degrees.Ninety);
+            var theta = Angle.From(new Degrees(rawTheta));
             var point = new Spherical(phi, theta);
 
             Assert.Equal(new Degrees(expected), point.Theta.Degrees);
@@ -54,8 +54,8 @@ namespace FullerProjection.Test
         [Fact]
         public void Negative_r_throws()
         {
-            var phi = Angle.FromDegrees(Degrees.Ninety);
-            var theta = Angle.FromDegrees(Degrees.Ninety);
+            var phi = Angle.From(Degrees.Ninety);
+            var theta = Angle.From(Degrees.Ninety);
             
             Assert.Throws<ArgumentException>(() => new Spherical(phi, theta, -1));
         }
@@ -63,8 +63,8 @@ namespace FullerProjection.Test
         [Fact]
         public void Default_r_value_is_one()
         {
-            var phi = Angle.FromDegrees(Degrees.Ninety);
-            var theta = Angle.FromDegrees(Degrees.Ninety);
+            var phi = Angle.From(Degrees.Ninety);
+            var theta = Angle.From(Degrees.Ninety);
 
             var point = new Spherical(phi, theta);
             

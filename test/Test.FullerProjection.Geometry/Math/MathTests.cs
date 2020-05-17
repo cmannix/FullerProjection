@@ -10,7 +10,7 @@ namespace FullerProjection.Test
         [Fact]
         public void Can_calculate_sin_of_angle()
         {
-            var angle = Angle.FromDegrees(new Degrees(90));
+            var angle = Angle.From(new Degrees(90));
 
             var result = Sin(angle);
 
@@ -21,7 +21,7 @@ namespace FullerProjection.Test
         [Fact]
         public void Can_calculate_cos_of_angle()
         {
-            var angle = Angle.FromDegrees(new Degrees(90));
+            var angle = Angle.From(new Degrees(90));
 
             var result = Cos(angle);
 
@@ -32,7 +32,7 @@ namespace FullerProjection.Test
         [Fact]
         public void Can_calculate_tan_of_angle()
         {
-            var angle = Angle.FromDegrees(new Degrees(30));
+            var angle = Angle.From(new Degrees(30));
 
             var result = Tan(angle);
 

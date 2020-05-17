@@ -11,7 +11,7 @@ namespace FullerProjection.Test
         {
             var degree = new Degrees(180);
 
-            var angle = Angle.FromDegrees(degree);
+            var angle = Angle.From(degree);
 
             Assert.Equal(angle.Degrees, degree);
         }
@@ -21,7 +21,7 @@ namespace FullerProjection.Test
         {
             var radians = new Radians(Math.PI);
 
-            var angle = Angle.FromRadians(radians);
+            var angle = Angle.From(radians);
 
             Assert.Equal(radians, angle.Radians);
         }
@@ -31,7 +31,7 @@ namespace FullerProjection.Test
         {
             var radians = new Radians(Math.PI);
 
-            var angle = Angle.FromRadians(radians);
+            var angle = Angle.From(radians);
 
             Assert.Equal(new Degrees(180), angle.Degrees);
         }
@@ -41,7 +41,7 @@ namespace FullerProjection.Test
         {
             var degrees = new Degrees(180);
 
-            var angle = Angle.FromDegrees(degrees);
+            var angle = Angle.From(degrees);
 
             Assert.Equal(new Radians(Math.PI), angle.Radians);
         }

@@ -20,16 +20,16 @@ namespace FullerProjection.Geometry.Coordinates
 
         private Angle EnsurePhi(Angle candidateValue)
         {
-            var value = Angle.FromDegrees(new Degrees(candidateValue.Degrees.Value % 360));
-            if (value.Degrees.Value < 0) value += Angle.FromDegrees(Degrees.ThreeSixty);
+            var value = Angle.From(new Degrees(candidateValue.Degrees.Value % 360));
+            if (value.Degrees.Value < 0) value += Angle.From(Degrees.ThreeSixty);
 
             return value;
         }
 
         private Angle EnsureTheta(Angle candidateValue)
         {
-            var value = Angle.FromDegrees(new Degrees(candidateValue.Degrees.Value % 180));
-            if (value.Degrees.Value < 0) value += Angle.FromDegrees(Degrees.OneEighty);
+            var value = Angle.From(new Degrees(candidateValue.Degrees.Value % 180));
+            if (value.Degrees.Value < 0) value += Angle.From(Degrees.OneEighty);
 
             return value;
         }

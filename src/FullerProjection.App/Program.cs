@@ -42,7 +42,7 @@ namespace ProjectionApp
             var longitude = 10;
             var latitude = 10;
 
-            var point = new Geodesic(Angle.FromDegrees(latitude), Angle.FromDegrees(longitude));
+            var point = new Geodesic(Angle.From(latitude), Angle.From(longitude));
             var fullerPoint = FullerProjectionService.GetFullerPoint(point);
             Console.WriteLine($"X = {fullerPoint.X}, Y = {fullerPoint.Y}");
         }
@@ -63,7 +63,7 @@ namespace ProjectionApp
         {
             var elements = line.Split(',');
 
-            return new Geodesic(Angle.FromDegrees(double.Parse(elements[1])), Angle.FromDegrees(double.Parse(elements[0])));
+            return new Geodesic(Angle.From(double.Parse(elements[1])), Angle.From(double.Parse(elements[0])));
         }
 
         private const string InputPath = @"";

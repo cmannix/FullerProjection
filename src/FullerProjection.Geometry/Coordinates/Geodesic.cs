@@ -17,8 +17,8 @@ namespace FullerProjection.Geometry.Coordinates
 
         private Angle EnsureLongitude(Angle candidateValue)
         {
-            var value = Angle.FromDegrees(new Degrees(candidateValue.Degrees.Value % 360));
-            if (value.Degrees.Value < 0) value += Angle.FromDegrees(Degrees.ThreeSixty);
+            var value = Angle.From(new Degrees(candidateValue.Degrees.Value % 360));
+            if (value.Degrees.Value < 0) value += Angle.From(Degrees.ThreeSixty);
 
             return value;
         }
@@ -32,8 +32,8 @@ namespace FullerProjection.Geometry.Coordinates
             return candidateValue;
         }
 
-        private static Angle LatitudeLowerBound = Angle.FromDegrees(Degrees.MinusNinety);
-        private static Angle LatitudeUpperBound = Angle.FromDegrees(Degrees.Ninety);
+        private static Angle LatitudeLowerBound = Angle.From(Degrees.MinusNinety);
+        private static Angle LatitudeUpperBound = Angle.From(Degrees.Ninety);
 
         public override string ToString() => $"Latitude: {Latitude.Degrees} degrees, Longitude: {Longitude.Degrees} degrees";
     }

@@ -27,21 +27,21 @@ namespace FullerProjection.Geometry.Coordinates
             var y = point.Y;
             var z = point.Z;
 
-            var latitude = Angle.FromRadians(new Radians(System.Math.Acos(z)));
-            var longitude = Angle.FromDegrees(Degrees.Zero);
+            var latitude = Angle.From(new Radians(System.Math.Acos(z)));
+            var longitude = Angle.From(Degrees.Zero);
 
-            if (x.IsEqualTo(0) && y.IsGreaterThan(0)) { longitude = Angle.FromDegrees(Degrees.Ninety); }
-            if (x.IsEqualTo(0) && y.IsLessThan(0)) { longitude = Angle.FromDegrees(Degrees.TwoSeventy); }
-            if (x.IsEqualTo(0) && y.IsEqualTo(0)) { longitude = Angle.FromDegrees(Degrees.Zero); }
-            if (x.IsLessThan(0) && y.IsEqualTo(0)) { longitude = Angle.FromDegrees(Degrees.OneEighty); }
+            if (x.IsEqualTo(0) && y.IsGreaterThan(0)) { longitude = Angle.From(Degrees.Ninety); }
+            if (x.IsEqualTo(0) && y.IsLessThan(0)) { longitude = Angle.From(Degrees.TwoSeventy); }
+            if (x.IsEqualTo(0) && y.IsEqualTo(0)) { longitude = Angle.From(Degrees.Zero); }
+            if (x.IsLessThan(0) && y.IsEqualTo(0)) { longitude = Angle.From(Degrees.OneEighty); }
             if (x.IsNotEqualTo(0) && y.IsNotEqualTo(0))
             {
-                var a = Angle.FromDegrees(Degrees.Zero);
-                if (x.IsGreaterThan(0) && y.IsGreaterThan(0)) { a = Angle.FromDegrees(Degrees.Zero); }
-                if (x.IsLessThan(0) && y.IsGreaterThan(0)) { a = Angle.FromDegrees(Degrees.OneEighty); }
-                if (x.IsLessThan(0) && y.IsLessThan(0)) { a = Angle.FromDegrees(Degrees.OneEighty); }
-                if (x.IsGreaterThan(0) && y.IsLessThan(0)) { a = Angle.FromDegrees(Degrees.ThreeSixty); }
-                longitude = Angle.FromRadians(new Radians(System.Math.Atan(y / x) + a.Radians.Value));
+                var a = Angle.From(Degrees.Zero);
+                if (x.IsGreaterThan(0) && y.IsGreaterThan(0)) { a = Angle.From(Degrees.Zero); }
+                if (x.IsLessThan(0) && y.IsGreaterThan(0)) { a = Angle.From(Degrees.OneEighty); }
+                if (x.IsLessThan(0) && y.IsLessThan(0)) { a = Angle.From(Degrees.OneEighty); }
+                if (x.IsGreaterThan(0) && y.IsLessThan(0)) { a = Angle.From(Degrees.ThreeSixty); }
+                longitude = Angle.From(new Radians(System.Math.Atan(y / x) + a.Radians.Value));
             }
 
             return new Geodesic(
@@ -51,7 +51,7 @@ namespace FullerProjection.Geometry.Coordinates
         
         public static Spherical SphericalFrom(Geodesic point) 
         {
-            var theta = Angle.FromDegrees(Degrees.Ninety) - point.Latitude;
+            var theta = Angle.From(Degrees.Ninety) - point.Latitude;
 
             var phi = point.Longitude;
 
