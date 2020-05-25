@@ -1,78 +1,55 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using static FullerProjection.Core.FullerProjection;
 using FullerProjection.Core.Geometry.Coordinates;
 using FullerProjection.Core.Geometry.Angles;
+using CommandLine;
 
-namespace ProjectionApp
+namespace FullerProjection.App
 {
     static class Program
     {
         private static void Main(string[] args)
         {
-            var mode = GetMode();
-            if (mode is ProcessingMode.Console) ProcessConsole();
-            if (mode is ProcessingMode.File) ProcessFile();
+            var result = Parser.Default.ParseArguments<Options>(args);
 
-            Console.WriteLine("Any key to quit");
-            Console.ReadKey();
-
-            ProcessingMode GetMode()
+            result.WithParsed(o =>
             {
-                while (true)
+                if (o.InputAsGeodesic is object)
                 {
-                    Console.WriteLine("Console (1) or File (2) input: ");
-                    if (int.TryParse(Console.ReadLine(), out var choice))
-                    {
-                        if (choice == 1) return ProcessingMode.Console;
-                        if (choice == 2) return ProcessingMode.File;
-                    }
+                    var fullerPoint = GetFullerPoint(o.InputAsGeodesic);
+                    Console.WriteLine("Projected point on Dymaxion projection:");
+                    Console.WriteLine($"\t{fullerPoint}");
                 }
+                else if (o.InputFilePath is object && o.OutputFilePath is object)
+                {
+                    var inputPath = Path.GetFullPath(o.InputFilePath);
+                    var outputPath = Path.GetFullPath(o.OutputFilePath);
 
-            }
+                    ProcessFiles(inputPath, outputPath);
+                }
+                else {
+                    Console.WriteLine("Must provide either Longitude/Latitude OR an input/ouput file");
+                }
+            });
         }
 
-        private static void ProcessConsole()
+        private static void ProcessFiles(string inputPath, string outputPath)
         {
-            var input = GetPoint();
-            var result = GetFullerPoint(input);
-            WriteResult(result);
+            var sw = Stopwatch.StartNew();
+            var results = File.ReadAllLines(inputPath)
+            .Select(ParseLine)
+            .Select(GetFullerPoint)
+            .Select(r => $"{r.X}, {r.Y}")
+            .ToList();
 
-            Geodesic GetPoint()
-            {
-                Console.WriteLine("Enter coordinate: ");
-                var latitude = GetDegreesInput("Latitude");
-                var longitude = GetDegreesInput("Longitude");
+            Console.WriteLine($"Read {results.Count} lines from '{inputPath} in {sw.Elapsed.TotalSeconds:N2} seconds'");
 
-                return new Geodesic(latitude, longitude);
-                Angle GetDegreesInput(string name)
-                {
-                    Console.WriteLine($"{name}: ");
-                    if (double.TryParse(Console.ReadLine(), out var value))
-                    {
-                        return Angle.From(Degrees.FromRaw(value));
-                    }
-                    throw new ArgumentException("Could not parse input as degree value");
-                }
-            }
+            File.WriteAllLines(outputPath, results);
 
-            void WriteResult(Cartesian2D result) => Console.WriteLine(result);
-        }
-
-        private static void ProcessFile()
-        {
-            const string InputPath = @"/Users/chris.mannix/src/personal/TestProm/test.csv";
-            const string OutputPath = @"/Users/chris.mannix/src/personal/TestProm/test_dymax.csv";
-
-            var lines = File.ReadAllLines(InputPath);
-
-            var results = lines
-                .Select(ParseLine)
-                .Select(GetFullerPoint)
-                .Select(r => $"{r.X}, {r.Y}");
-
-            File.WriteAllLines(OutputPath, results);
+            Console.WriteLine($"Successfully wrote to '{outputPath}'");
 
             Geodesic ParseLine(string line)
             {
@@ -80,12 +57,6 @@ namespace ProjectionApp
 
                 return new Geodesic(Angle.From(Degrees.FromRaw(double.Parse(elements[1]))), Angle.From(Degrees.FromRaw(double.Parse(elements[0]))));
             }
-        }
-
-        internal enum ProcessingMode
-        {
-            Console,
-            File
         }
     }
 }
