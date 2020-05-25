@@ -22,7 +22,7 @@ namespace FullerProjection.Core.Geometry.Angles
         public static Angle operator +(Angle a1, Angle a2) => new Angle(a1.Degrees + a2.Degrees);
         public static Angle operator -(Angle a1, Angle a2) => new Angle(a1.Degrees - a2.Degrees);
         public static Angle operator %(Angle a, Angle b) => new Angle(a.Degrees % b.Degrees);
-        public int CompareTo(Angle other) => this.Degrees.CompareTo(other.Degrees);
+        public int CompareTo(Angle? other) => other is object ? this.Degrees.CompareTo(other.Degrees) : 1;
         public static bool operator >(Angle a, Angle b) => a.CompareTo(b) > 0;
         public static bool operator <(Angle a, Angle b) => a.CompareTo(b) < 0;
         public static bool operator ==(Angle value1, Angle value2)

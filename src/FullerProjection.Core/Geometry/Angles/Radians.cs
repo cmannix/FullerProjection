@@ -20,9 +20,9 @@ namespace FullerProjection.Core.Geometry.Angles
         public static Radians operator +(Radians a, Radians b) => Radians.FromRaw(a.Value + b.Value);
         public static Radians operator -(Radians a, Radians b) => Radians.FromRaw(a.Value - b.Value);
         public static Radians operator %(Radians a, Radians b) => FromRaw(a.Value % b.Value);
-        public int CompareTo(Radians other) => this.Value.CompareTo(other.Value);
-        public static bool operator >(Radians a, Radians b) => a.CompareTo(b) > 0;
-        public static bool operator <(Radians a, Radians b) => a.CompareTo(b) < 0;
+        public int CompareTo(Radians? other) => other is object ? this.Value.CompareTo(other.Value) : 1;
+        public static bool operator >(Radians a, Radians b) => a.CompareTo(b) == 1;
+        public static bool operator <(Radians a, Radians b) => a.CompareTo(b) == -1;
         public static bool operator ==(Radians value1, Radians value2)
         {
             if (value1 is null || value2 is null)

@@ -21,9 +21,9 @@ namespace FullerProjection.Core.Geometry.Angles
         public static Degrees operator +(Degrees a, Degrees b) => FromRaw(a.Value + b.Value);
         public static Degrees operator -(Degrees a, Degrees b) => FromRaw(a.Value - b.Value);
         public static Degrees operator %(Degrees a, Degrees b) => FromRaw(a.Value % b.Value);
-        public int CompareTo(Degrees other) => this.Value.CompareTo(other.Value);
-        public static bool operator >(Degrees a, Degrees b) => a.CompareTo(b) > 0;
-        public static bool operator <(Degrees a, Degrees b) => a.CompareTo(b) < 0;
+        public int CompareTo(Degrees? other) => other is object ? this.Value.CompareTo(other.Value) : 1;
+        public static bool operator >(Degrees a, Degrees b) => a.CompareTo(b) == 1;
+        public static bool operator <(Degrees a, Degrees b) => a.CompareTo(b) == -1;
         public static bool operator ==(Degrees value1, Degrees value2)
         {
             if (value1 is null || value2 is null)
