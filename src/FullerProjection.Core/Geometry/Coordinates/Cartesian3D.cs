@@ -21,7 +21,7 @@ namespace FullerProjection.Core.Geometry.Coordinates
         public double Y { get; }
         public double Z { get; }
         public Double Magnitude() => Sqrt(Pow(X, 2) + Pow(Y, 2) + Pow(Z, 2));
-
+        public Cartesian3D Divide(double value) => new Cartesian3D(x: X / value, y: Y / value, z: Z / value );
         public Cartesian3D RotateX(Angle angle) => new Cartesian3D(
                         x: X,
                         y: Y * Cos(angle) - Z * Sin(angle),
