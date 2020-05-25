@@ -4,7 +4,7 @@ using System.Linq;
 using FullerProjection.Core.Geometry.Angles;
 using static System.Math;
 
-namespace FullerProjection.Core.Projection
+namespace FullerProjection.Core
 {
     public class FullerTriangle
     {
@@ -30,12 +30,12 @@ namespace FullerProjection.Core.Projection
             var hDist2 = (point - face.B).Magnitude();
             var hDist3 = (point - face.C).Magnitude();
 
-            if ((hDist1 <= hDist2) && (hDist2 <= hDist3)) { return 1; }
-            if ((hDist1 <= hDist3) && (hDist3 <= hDist2)) { return 6; }
-            if ((hDist2 <= hDist1) && (hDist1 <= hDist3)) { return 2; }
-            if ((hDist2 <= hDist3) && (hDist3 <= hDist1)) { return 3; }
-            if ((hDist3 <= hDist1) && (hDist1 <= hDist2)) { return 5; }
-            if ((hDist3 <= hDist2) && (hDist2 <= hDist1)) { return 4; }
+            if ((hDist1 <= hDist2) && (hDist2 <= hDist3)) { return 0; }
+            if ((hDist1 <= hDist3) && (hDist3 <= hDist2)) { return 5; }
+            if ((hDist2 <= hDist1) && (hDist1 <= hDist3)) { return 1; }
+            if ((hDist2 <= hDist3) && (hDist3 <= hDist1)) { return 2; }
+            if ((hDist3 <= hDist1) && (hDist1 <= hDist2)) { return 4; }
+            if ((hDist3 <= hDist2) && (hDist2 <= hDist1)) { return 3; }
             else throw new Exception("Could not identify lowest common denominator triangle");
         }
 

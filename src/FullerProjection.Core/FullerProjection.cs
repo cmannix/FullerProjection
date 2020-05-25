@@ -1,13 +1,14 @@
+using System;
 using FullerProjection.Core.Geometry.Coordinates;
 using FullerProjection.Core.Geometry.Angles;
-using FullerProjection.Core.Projection;
+using FullerProjection.Core;
 using static System.Math;
 using static FullerProjection.Core.DymaxionConstants;
 
 namespace FullerProjection.Core
 {
 
-    public class FullerProjectionService
+    public class FullerProjection
     {
 
         public static Cartesian2D GetFullerPoint(Geodesic point) => GetCoordinatesOnFullerProjection(Conversion.Cartesian3D.From(point));
@@ -15,18 +16,18 @@ namespace FullerProjection.Core
         public static Cartesian2D GetCoordinatesOnFullerProjection(Cartesian3D point)
         {
             var containingTriangle = FullerTriangle.ForPoint(point);
-            var sp = Conversion.Spherical.From(containingTriangle.IcosahedronFace.Centroid);
+            var triangleCentre = Conversion.Spherical.From(containingTriangle.IcosahedronFace.Centroid);
 
-            var vertexCoordinate = containingTriangle.IcosahedronFace.A
-                .RotateZ(sp.Phi)
-                .RotateY(sp.Theta);
+            var vertexPoint = containingTriangle.IcosahedronFace.A
+                .RotateZ(triangleCentre.Phi)
+                .RotateY(triangleCentre.Theta);
 
             point = point
-                .RotateZ(sp.Phi)
-                .RotateY(sp.Theta);
+                .RotateZ(triangleCentre.Phi)
+                .RotateY(triangleCentre.Theta);
 
-            var sp2 = Conversion.Geodesic.From(vertexCoordinate);
-            var adjustedLongitude = sp2.Longitude - (Angle.From(Degrees.Ninety));
+            var sphericalVertexPoint = Conversion.Spherical.From(vertexPoint);
+            var adjustedLongitude = sphericalVertexPoint.Phi - (Angle.From(Degrees.Ninety));
 
             point = point.RotateZ(adjustedLongitude);
 

@@ -2,7 +2,7 @@ using FullerProjection.Core.Geometry.Coordinates;
 using System;
 using System.Collections.Generic;
 
-namespace FullerProjection.Core.Projection
+namespace FullerProjection.Core
 {
     public static class FullerIcosahedron
     {
@@ -62,7 +62,8 @@ namespace FullerProjection.Core.Projection
                 A = a;
                 B = b;
                 C = c;
-                Centroid = (A + B + C).Divide(3);
+                var unscaledCentroid = (A + B + C).Divide(3);
+                Centroid = unscaledCentroid.Divide(unscaledCentroid.Magnitude());
             }
             public Cartesian3D Centroid { get; }
             public Cartesian3D A { get; }
